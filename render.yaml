@@ -1,0 +1,26 @@
+# Blueprint Render — conectar repo y usar "New > Blueprint"
+services:
+  - type: web
+    name: equiwork
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run css:build
+    startCommand: npm start
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_DIALECT
+        value: sqlite
+      - key: DB_STORAGE
+        value: database/equiwork.sqlite
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_INITIAL_EMAIL
+        value: admin@equiwork.local
+      - key: ADMIN_INITIAL_NAME
+        value: Administrador
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false

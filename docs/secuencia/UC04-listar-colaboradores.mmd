@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant ColaboradorController
+    participant ColaboradorService
+    participant ColaboradorCuentaService
+    participant ColaboradorRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Abrir modulo Colaboradores
+    Navegador->>ColaboradorController: GET api colaboradores
+    ColaboradorController->>ColaboradorService: listar opciones
+    ColaboradorService->>ColaboradorRepository: findAll
+    ColaboradorRepository->>DB: SELECT con cuenta encuesta
+    DB-->>ColaboradorRepository: lista
+    ColaboradorRepository-->>ColaboradorService: colaboradores
+    ColaboradorService->>ColaboradorCuentaService: serializar cada colaborador
+    ColaboradorService-->>ColaboradorController: lista DTO
+    ColaboradorController-->>Navegador: 200 JSON
+    Navegador-->>Staff: Tabla de colaboradores

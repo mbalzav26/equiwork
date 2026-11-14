@@ -1,0 +1,22 @@
+﻿@startuml UC05
+left to right direction
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+actor Colaborador as COL
+rectangle "Sistema EquiWork" {
+  usecase "UC05\nAutoreportar carga\n(encuesta)" as UC
+  usecase "Registrar evento propio" as I1
+  usecase "Consultar historial\ny resumen" as I2
+  usecase "Eliminar evento propio" as I3
+  usecase "Validar datos\nsolo del colaborador" as I4
+}
+COL --> UC
+UC ..> I1 : <<include>>
+UC ..> I2 : <<include>>
+UC ..> I3 : <<include>>
+I1 ..> I4 : <<include>>
+I3 ..> I4 : <<include>>
+@enduml

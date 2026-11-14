@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant EventoController
+    participant EventoService
+    participant ColaboradorService
+    participant QuincenaService
+    participant RegistroRepository
+    participant EventoRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Registrar nuevo evento
+    Navegador->>EventoController: POST /api/eventos
+    EventoController->>EventoService: registrarEvento(payload)
+    EventoService->>ColaboradorService: obtenerPorId(colaborador_id)
+    ColaboradorService->>DB: SELECT colaborador
+    EventoService->>QuincenaService: obtenerPorId(quincena_id)
+    QuincenaService->>DB: SELECT quincena
+    EventoService->>EventoService: validar fecha en rango quincena
+    EventoService->>RegistroRepository: findOrCreate(colaborador, quincena)
+    RegistroRepository->>DB: findOrCreate registro_quincenal
+    EventoService->>EventoRepository: create(evento)
+    EventoRepository->>DB: INSERT eventos
+    DB-->>EventoRepository: evento
+    EventoRepository-->>EventoService: evento
+    EventoService-->>EventoController: evento
+    EventoController-->>Navegador: 201 JSON
+    Navegador-->>Staff: Historial actualizado

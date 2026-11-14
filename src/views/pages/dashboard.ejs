@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="dashboard">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page">
+      <div class="ew-page-inner">
+        <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h1 class="ew-page-title">Dashboard analítico</h1>
+          <p class="ew-page-subtitle">Comparativa de horas y eventos por colaborador</p>
+        </div>
+        <div
+          class="ew-card flex w-full flex-col gap-3 p-4 sm:flex-row sm:items-end lg:max-w-2xl lg:p-5"
+        >
+          <div class="min-w-0 flex-1">
+            <label for="selectQuincena" class="ew-label">Quincena</label>
+            <select id="selectQuincena" class="ew-select ew-input-lg"></select>
+          </div>
+          <button type="button" class="ew-btn-primary ew-btn-lg w-full sm:w-auto" id="btnFiltrarQuincena">
+            Filtrar quincena
+          </button>
+        </div>
+      </div>
+
+        <%- include('../partials/page-loading', { id: 'dashboardLoading', scope: 'page', label: 'Cargando balance…' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-3 text-xs text-slate-600 sm:gap-4 sm:px-4">
+        <span class="font-semibold text-slate-700">Leyenda de carga:</span>
+        <span class="inline-flex items-center gap-2"
+          ><span class="ew-legend-dot bg-red-500"></span> Sobrecarga</span
+        >
+        <span class="inline-flex items-center gap-2"
+          ><span class="ew-legend-dot bg-brand-600"></span> Equilibrado</span
+        >
+        <span class="inline-flex items-center gap-2"
+          ><span class="ew-legend-dot bg-amber-500"></span> Subasignado</span
+        >
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-3" id="kpiCards">
+        <div class="ew-kpi">
+          <p class="ew-kpi-label">Promedio horas</p>
+          <p class="ew-kpi-value" id="kpiPromedio">—</p>
+        </div>
+        <div class="ew-kpi">
+          <p class="ew-kpi-label">Meta quincenal</p>
+          <p class="ew-kpi-value" id="kpiMeta">—</p>
+        </div>
+        <div class="ew-kpi">
+          <p class="ew-kpi-label">Periodo</p>
+          <p class="mt-2 text-lg font-semibold text-slate-900" id="kpiPeriodo">—</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-12">
+        <section class="ew-card lg:col-span-7">
+          <div class="ew-card-header">
+            <h2 class="text-base font-semibold text-slate-900">Horas trabajadas por colaborador</h2>
+          </div>
+          <div class="ew-card-body">
+            <canvas id="chartHoras" height="120" aria-label="Gráfico de horas"></canvas>
+          </div>
+        </section>
+        <section class="ew-card lg:col-span-5">
+          <div class="ew-card-header">
+            <h2 class="text-base font-semibold text-slate-900">Eventos registrados</h2>
+          </div>
+          <div class="ew-card-body">
+            <canvas id="chartEventos" height="120" aria-label="Gráfico de eventos"></canvas>
+          </div>
+        </section>
+      </div>
+
+      <section class="ew-card mt-6">
+        <div class="ew-card-header">
+          <h2 class="text-base font-semibold text-slate-900">Detalle de carga</h2>
+        </div>
+        <div class="ew-table-wrap">
+          <table class="ew-table" id="tablaBalance">
+            <thead>
+              <tr>
+                <th>Colaborador</th>
+                <th>Área</th>
+                <th>Horas</th>
+                <th>Eventos</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

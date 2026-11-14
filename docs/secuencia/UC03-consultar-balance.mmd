@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor Supervisor
+    participant Navegador
+    participant DashboardController
+    participant DashboardService
+    participant QuincenaService
+    participant RegistroRepository
+    participant DB as Base de datos
+
+    Supervisor->>Navegador: Elegir quincena en dashboard
+    Navegador->>DashboardController: GET balance por quincenaId
+    Note over Navegador,DashboardController: JWT en cookie
+    DashboardController->>DashboardService: obtenerBalance(quincenaId)
+    DashboardService->>QuincenaService: obtenerPorId(quincenaId)
+    QuincenaService->>DB: SELECT quincenas
+    DB-->>QuincenaService: quincena
+    DashboardService->>RegistroRepository: resumenPorQuincena(quincenaId)
+    RegistroRepository->>DB: agregación horas/eventos
+    DB-->>RegistroRepository: totales por colaborador
+    DashboardService->>DashboardService: calcular estado de carga
+    DashboardService-->>DashboardController: balance JSON
+    DashboardController-->>Navegador: 200 JSON balance
+    Navegador-->>Supervisor: Gráficos y tabla de carga

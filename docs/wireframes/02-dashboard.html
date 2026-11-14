@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wireframe — Dashboard</title>
+    <link rel="stylesheet" href="wireframe.css" />
+  </head>
+  <body>
+    <p class="frame-label">Desktop · 1280 — Dashboard analítico</p>
+    <div class="frame" style="max-width: 1280px">
+      <div class="wf-shell">
+        <aside class="wf-sidebar">
+          <div class="wf-sidebar-head">
+            <div class="wf-logo"></div>
+            <span class="wf-brand">EquiWork</span>
+          </div>
+          <div class="wf-user">
+            <div class="wf-user-line"></div>
+            <div class="wf-user-line sm"></div>
+          </div>
+          <nav class="wf-nav">
+            <div class="wf-nav-item active"><span class="wf-nav-icon"></span> Dashboard</div>
+            <div class="wf-nav-item"><span class="wf-nav-icon"></span> Colaboradores</div>
+            <div class="wf-nav-item"><span class="wf-nav-icon"></span> Eventos</div>
+            <div class="wf-nav-item"><span class="wf-nav-icon"></span> Reportes</div>
+          </nav>
+        </aside>
+        <div class="wf-main">
+          <header class="wf-top"><div class="wf-btn-ghost">Cerrar sesión</div></header>
+          <div class="wf-content">
+            <div class="wf-row" style="justify-content: space-between">
+              <div>
+                <h1 class="wf-title">Dashboard analítico</h1>
+                <p class="wf-sub">Comparativa de horas y eventos por colaborador</p>
+              </div>
+              <div class="wf-row" style="margin: 0; max-width: 420px">
+                <div class="wf-field">
+                  <p class="wf-label">Quincena</p>
+                  <div class="wf-select"></div>
+                </div>
+                <div class="wf-btn primary">Filtrar</div>
+              </div>
+            </div>
+            <div class="wf-legend">
+              <span><span class="wf-dot"></span> Sobrecarga</span>
+              <span><span class="wf-dot"></span> Equilibrado</span>
+              <span><span class="wf-dot"></span> Subasignado</span>
+            </div>
+            <div class="wf-kpi-grid">
+              <div class="wf-kpi"><p class="wf-kpi-l">Promedio horas</p><div class="wf-kpi-v"></div></div>
+              <div class="wf-kpi"><p class="wf-kpi-l">Meta quincenal</p><div class="wf-kpi-v"></div></div>
+              <div class="wf-kpi"><p class="wf-kpi-l">Periodo</p><div class="wf-kpi-v"></div></div>
+            </div>
+            <div class="wf-grid-charts">
+              <div class="wf-card">
+                <div class="wf-card-h">Horas por colaborador</div>
+                <div class="wf-card-b"><div class="wf-chart">Gráfico de barras</div></div>
+              </div>
+              <div class="wf-card">
+                <div class="wf-card-h">Eventos registrados</div>
+                <div class="wf-card-b"><div class="wf-chart">Gráfico dona</div></div>
+              </div>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-h">Detalle por colaborador</div>
+              <div class="wf-card-b">
+                <table class="wf-table">
+                  <thead>
+                    <tr>
+                      <th>Colaborador</th>
+                      <th>Horas</th>
+                      <th>Eventos</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><div class="wf-cell"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 70px"></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="wf-cell"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 70px"></div></td>
+                    </tr>
+                    <tr>
+                      <td><div class="wf-cell"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 40px"></div></td>
+                      <td><div class="wf-cell" style="width: 70px"></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<div
+  id="modalFotoAmpliada"
+  class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4"
+  data-modal
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modalFotoAmpliadaTitulo"
+>
+  <div class="absolute inset-0 bg-slate-900/85 backdrop-blur-sm" data-modal-backdrop></div>
+  <div class="relative flex max-h-[90vh] w-full max-w-3xl flex-col items-center gap-3">
+    <p id="modalFotoAmpliadaTitulo" class="sr-only">Foto ampliada</p>
+    <button
+      type="button"
+      class="ew-btn-secondary absolute -top-1 right-0 z-10 sm:top-0"
+      data-modal-close
+      aria-label="Cerrar"
+    >
+      Cerrar
+    </button>
+    <img
+      id="modalFotoAmpliadaImg"
+      src=""
+      alt=""
+      class="ew-foto-lightbox-img max-h-[min(85vh,720px)] w-auto max-w-full rounded-2xl object-contain shadow-2xl ring-1 ring-white/10"
+    />
+  </div>
+</div>

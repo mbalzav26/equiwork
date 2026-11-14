@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="actividades">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner">
+        <div class="ew-page-content w-full max-w-none" data-page-content>
+      <div class="mb-8 max-w-3xl">
+        <p class="ew-section-kicker">Administración</p>
+        <h1 class="ew-page-title">Catálogo de actividades</h1>
+        <p class="ew-page-subtitle mt-1">
+          Define los tipos recreativos disponibles en eventos y encuesta. Cada actividad incluye una descripción para
+          orientar al equipo.
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+        <section class="ew-card ew-panel-accent ew-actividades-form lg:col-span-12 xl:col-span-6">
+          <div class="ew-card-header bg-gradient-to-r from-brand-50/80 to-white px-6 py-5 sm:px-8">
+            <h2 class="text-lg font-semibold text-slate-900">Nueva actividad</h2>
+            <p class="mt-1 text-sm text-slate-500">Nombre y descripción pública del catálogo</p>
+          </div>
+          <div class="ew-card-body px-6 py-6 sm:px-8 sm:py-8">
+            <form id="formNuevoTipo" class="space-y-6">
+              <div>
+                <label for="nuevoTipoNombre" class="ew-label text-base">Nombre</label>
+                <input
+                  type="text"
+                  id="nuevoTipoNombre"
+                  class="ew-input ew-input-lg"
+                  maxlength="80"
+                  placeholder="Ej. Zumba kids"
+                  required
+                />
+              </div>
+              <div>
+                <label for="nuevoTipoDescripcion" class="ew-label text-base">¿De qué trata?</label>
+                <textarea
+                  id="nuevoTipoDescripcion"
+                  class="ew-input ew-textarea-lg min-h-[11rem] resize-y"
+                  maxlength="500"
+                  rows="6"
+                  required
+                  placeholder="Ej. Sesión de baile acuático en piscina para grupos de 15 a 30 personas."
+                ></textarea>
+                <p class="ew-help mt-2 text-sm">Entre 10 y 500 caracteres. Visible al elegir el tipo en eventos y encuesta.</p>
+              </div>
+              <button type="submit" class="ew-btn-primary ew-btn-lg w-full sm:max-w-md">Agregar actividad</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="ew-card lg:col-span-12 xl:col-span-6">
+          <div class="ew-card-header flex flex-wrap items-start justify-between gap-3 border-b border-slate-100">
+            <div>
+              <h2 class="text-base font-semibold text-slate-900">Actividades registradas</h2>
+              <p class="mt-1 text-xs text-slate-500">Activas e inactivas · desactivar no borra el historial</p>
+            </div>
+            <button type="button" class="ew-btn-secondary text-sm" id="btnRefrescarActividades">Actualizar</button>
+          </div>
+          <div class="ew-card-body relative min-h-[12rem]">
+            <%- include('../partials/page-loading', { id: 'actividadesLoading', scope: 'section' }) %>
+            <ul id="listaTiposActividadAdmin" class="space-y-3 text-sm"></ul>
+          </div>
+        </section>
+      </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/actividades.js"></script>
+  </body>
+</html>

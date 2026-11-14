@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant ReporteController
+    participant ReporteService
+    participant DashboardService
+    participant RegistroRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Solicitar reporte de quincena
+    alt Exportar CSV
+        Navegador->>ReporteController: GET export CSV
+        ReporteController->>ReporteService: resumenQuincenalCsv(quincenaId)
+    else Vista JSON
+        Navegador->>ReporteController: GET reporte JSON
+        ReporteController->>ReporteService: resumenQuincenal(quincenaId)
+    end
+
+    ReporteService->>DashboardService: obtenerBalance(quincenaId)
+    DashboardService->>DB: consultas agregadas
+    ReporteService->>RegistroRepository: listarDetalleQuincena(quincenaId)
+    RegistroRepository->>DB: SELECT registros + eventos
+    DB-->>RegistroRepository: detalle
+    ReporteService->>ReporteService: armar estructura / filas CSV
+    ReporteService-->>ReporteController: reporte
+
+    alt CSV
+        ReporteController-->>Navegador: text/csv attachment
+        Navegador-->>Staff: Descarga archivo
+    else JSON
+        ReporteController-->>Navegador: 200 application/json
+        Navegador-->>Staff: Vista previa en pantalla
+    end

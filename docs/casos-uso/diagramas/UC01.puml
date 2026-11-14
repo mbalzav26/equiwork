@@ -1,0 +1,27 @@
+﻿@startuml UC01
+left to right direction
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+actor Administrador as ADM
+actor Supervisor as SUP
+actor Colaborador as COL
+rectangle "Sistema EquiWork" {
+  usecase "UC01\nGestionar acceso\nal sistema" as UC
+  usecase "Iniciar sesión" as I1
+  usecase "Cerrar sesión" as I2
+  usecase "Verificar credenciales\ny emitir JWT" as I3
+  usecase "Redirigir según rol" as I4
+  usecase "Credenciales inválidas" as E1
+}
+ADM --> UC
+SUP --> UC
+COL --> UC
+UC ..> I1 : <<include>>
+UC ..> I2 : <<include>>
+I1 ..> I3 : <<include>>
+I1 ..> I4 : <<include>>
+E1 ..> I1 : <<extend>>
+@enduml

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="reportes">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page">
+      <div class="ew-page-inner">
+        <%- include('../partials/page-loading', { id: 'reporteLoading', scope: 'page', label: 'Generando vista previa…' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+        <div>
+          <h1 class="ew-page-title">Reportes quincenales</h1>
+          <p class="ew-page-subtitle">Exportación estructurada del resumen de carga</p>
+        </div>
+        <div class="ew-card flex w-full flex-col gap-3 p-4 sm:flex-row sm:items-end xl:max-w-3xl">
+          <div class="min-w-0 flex-1">
+            <label for="repQuincena" class="ew-label">Quincena</label>
+            <select id="repQuincena" class="ew-select ew-input-lg"></select>
+          </div>
+          <button type="button" class="ew-btn-secondary ew-btn-lg w-full sm:w-auto" id="btnVistaPrevia">
+            Vista previa
+          </button>
+          <a href="#" class="ew-btn-success ew-btn-lg w-full sm:w-auto" id="btnExportarCsv">Exportar CSV</a>
+        </div>
+      </div>
+
+      <section class="ew-card">
+        <div class="ew-card-header">
+          <h2 class="text-base font-semibold text-slate-900">Vista previa JSON</h2>
+        </div>
+        <div class="ew-card-body">
+          <pre id="reportePreview">Seleccione una quincena y pulse «Vista previa».</pre>
+        </div>
+      </section>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/reportes.js"></script>
+  </body>
+</html>

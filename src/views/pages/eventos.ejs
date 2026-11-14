@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="eventos">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-24 lg:pb-8">
+      <div class="ew-page-inner">
+        <div class="ew-page-content w-full max-w-none" data-page-content>
+      <div class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="ew-section-kicker">Gestión quincenal</p>
+          <h1 class="ew-page-title">Registro de actividades</h1>
+          <p class="ew-page-subtitle mt-1 max-w-2xl">
+            Registra eventos recreativos por colaborador y quincena. Los tipos se administran en <strong>Actividades</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="ew-eventos-grid">
+        <section class="ew-card ew-panel-accent lg:col-span-5 lg:sticky lg:top-24 lg:z-10 xl:col-span-5">
+          <div class="ew-card-header bg-gradient-to-r from-brand-50/80 to-white">
+            <h2 class="text-base font-semibold text-slate-900">Nuevo evento</h2>
+            <p class="mt-1 text-xs text-slate-500">Contexto + detalle de la actividad</p>
+          </div>
+          <div class="ew-card-body">
+            <form id="formEvento" class="space-y-5">
+              <div class="rounded-xl border border-slate-200/90 bg-slate-50/60 p-4 space-y-4">
+                <p class="ew-section-kicker">Contexto</p>
+                <div>
+                  <label for="evQuincena" class="ew-label">Quincena</label>
+                  <select id="evQuincena" class="ew-select" required></select>
+                  <p class="ew-help" id="evRangoQuincena"></p>
+                </div>
+                <div class="relative" id="evColaboradorWrap">
+                  <label for="evColaboradorSearch" class="ew-label">Colaborador</label>
+                  <div class="relative">
+                    <span
+                      class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                      id="evColabSearchIcon"
+                    ></span>
+                    <input
+                      type="text"
+                      id="evColaboradorSearch"
+                      class="ew-input pl-10 pr-11"
+                      placeholder="Buscar por nombre, área o cargo..."
+                      autocomplete="off"
+                      aria-autocomplete="list"
+                      aria-controls="evColaboradorList"
+                    />
+                    <button
+                      type="button"
+                      id="evColaboradorClear"
+                      class="ew-combobox-clear hidden"
+                      aria-label="Limpiar búsqueda"
+                    ></button>
+                    <input type="hidden" id="evColaborador" required />
+                  </div>
+                  <ul id="evColaboradorList" class="ew-combobox-list hidden" role="listbox"></ul>
+                </div>
+              </div>
+
+              <div class="rounded-xl border border-slate-200/90 bg-white p-4 space-y-4 shadow-sm shadow-slate-200/40">
+                <p class="ew-section-kicker">Detalle del evento</p>
+                <div>
+                  <label for="evFecha" class="ew-label">Fecha</label>
+                  <input type="date" id="evFecha" class="ew-input" required />
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div class="sm:col-span-1">
+                    <label for="evTipo" class="ew-label">Tipo de actividad</label>
+                    <select id="evTipo" class="ew-select" required>
+                      <option value="">Cargando tipos…</option>
+                    </select>
+                    <p id="evTipoAyuda" class="ew-help mt-1.5 hidden rounded-lg bg-brand-50/80 px-2.5 py-2 text-brand-800"></p>
+                  </div>
+                  <div>
+                    <label for="evHoras" class="ew-label">Horas</label>
+                    <input
+                      type="number"
+                      step="0.25"
+                      min="0.25"
+                      max="24"
+                      id="evHoras"
+                      class="ew-input"
+                      placeholder="8"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label for="evDescripcion" class="ew-label">Descripción</label>
+                  <input
+                    type="text"
+                    id="evDescripcion"
+                    class="ew-input"
+                    maxlength="255"
+                    required
+                    placeholder="Ej. Show deportivo en colegio"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="ew-btn-primary ew-btn-lg hidden w-full lg:flex" id="btnGuardarEvento">
+                Guardar evento
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <section class="ew-card ew-eventos-historial flex flex-col lg:col-span-7 xl:col-span-7">
+          <div class="ew-card-header flex flex-wrap items-start justify-between gap-3 border-b border-slate-100">
+            <div>
+              <h2 class="text-base font-semibold text-slate-900">Historial de la quincena</h2>
+              <p class="mt-1 text-xs text-slate-500">Actividades del colaborador seleccionado</p>
+            </div>
+            <button type="button" class="ew-btn-secondary text-sm" id="btnRefrescarHistorial">Actualizar</button>
+          </div>
+          <div class="ew-card-body relative flex min-h-[12rem] flex-1 flex-col">
+            <%- include('../partials/page-loading', { id: 'historialLoading', scope: 'section' }) %>
+            <ul class="divide-y divide-slate-100 flex-1" id="listaHistorial"></ul>
+          </div>
+        </section>
+
+      </div>
+
+      <div
+        class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 p-4 backdrop-blur pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden"
+      >
+        <button type="submit" form="formEvento" class="ew-btn-primary ew-btn-lg w-full" id="btnGuardarEventoMobile">
+          Guardar evento
+        </button>
+      </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/colaboradorSearch.js"></script>
+    <script src="/js/tiposActividad.js"></script>
+    <script src="/js/eventos.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+# Gestión de defectos y problemas de software
+
+Los defectos y problemas técnicos se **identifican** en pruebas (Postman, navegador, regresión), en despliegue (BD, `.env`) o por reporte del usuario. Se **registran** con descripción, módulo, pasos para reproducir, severidad y evidencia en el historial del informe o en issues de GitHub. La **acción correctiva** reproduce el fallo en local, corrige la capa implicada (vista, API, servicio, repositorio o datos), valida el punto corregido y aplica regresión; luego commit y despliegue según 5.7.4, con respaldo de base si aplica.
+
+El **aseguramiento de la calidad** contrasta cada entrega con casos de uso, prueba endpoints antes de enlazar EJS, verifica roles y JWT, y usa checklist por módulo. La **mejora de procesos** refuerza integración incremental, validadores en rutas, acceso único a BD con Sequelize, respaldo previo a cambios de esquema y regresión tras cada fix; las lecciones aprendidas y ajustes al flujo de trabajo se documentan en el informe para reducir defectos en iteraciones siguientes.

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body class="ew-login-page">
+    <div class="ew-login-shell ew-login-shell--single">
+      <section class="ew-login-form-panel mx-auto max-w-lg">
+        <div class="ew-login-form-inner">
+          <header class="mb-8">
+            <h1 class="ew-login-heading">Crea tu nueva contraseña</h1>
+            <p class="ew-login-subheading">
+              Hola, <strong><%= usuario.nombre %></strong>. Por seguridad debes reemplazar la contraseña temporal antes
+              de continuar.
+            </p>
+          </header>
+
+          <% if (error) { %>
+          <div class="ew-alert-error mb-6" role="alert"><%= error %></div>
+          <% } %>
+
+          <form method="post" action="/cambiar-contrasena" class="space-y-5" novalidate>
+            <div>
+              <label for="password_actual" class="ew-label">Contraseña temporal</label>
+              <input
+                type="password"
+                class="ew-login-input w-full rounded-xl border border-slate-200 px-4 py-3"
+                id="password_actual"
+                name="password_actual"
+                required
+                autocomplete="current-password"
+              />
+            </div>
+            <div>
+              <label for="password_nueva" class="ew-label">Nueva contraseña</label>
+              <input
+                type="password"
+                class="ew-login-input w-full rounded-xl border border-slate-200 px-4 py-3"
+                id="password_nueva"
+                name="password_nueva"
+                required
+                minlength="8"
+                autocomplete="new-password"
+              />
+              <p class="ew-help mt-1">Mínimo 8 caracteres y distinta a la temporal.</p>
+            </div>
+            <div>
+              <label for="password_confirmacion" class="ew-label">Confirmar nueva contraseña</label>
+              <input
+                type="password"
+                class="ew-login-input w-full rounded-xl border border-slate-200 px-4 py-3"
+                id="password_confirmacion"
+                name="password_confirmacion"
+                required
+                minlength="8"
+                autocomplete="new-password"
+              />
+            </div>
+            <button type="submit" class="ew-login-submit">Guardar y continuar</button>
+          </form>
+
+          <form action="/logout" method="post" class="mt-6 text-center">
+            <button type="submit" class="text-sm font-medium text-brand-600 hover:text-brand-700">
+              Cerrar sesión
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+    <%- include('../partials/scripts') %>
+  </body>
+</html>

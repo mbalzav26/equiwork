@@ -1,0 +1,80 @@
+classDiagram
+    direction TB
+
+    class Usuario {
+        +id INTEGER PK
+        +email STRING
+        +password_hash STRING
+        +nombre STRING
+        +rol RolUsuario
+        +colaborador_id INTEGER FK
+        +activo BOOLEAN
+    }
+
+    class Colaborador {
+        +id INTEGER PK
+        +nombres STRING
+        +apellidos STRING
+        +email STRING
+        +cargo STRING
+        +area STRING
+        +activo BOOLEAN
+        +nombreCompleto()
+    }
+
+    class Quincena {
+        +id INTEGER PK
+        +anio SMALLINT
+        +mes TINYINT
+        +numero_quincena TINYINT
+        +fecha_inicio DATE
+        +fecha_fin DATE
+    }
+
+    class RegistroQuincenal {
+        +id INTEGER PK
+        +colaborador_id INTEGER FK
+        +quincena_id INTEGER FK
+        +estado EstadoRegistro
+        +observaciones STRING
+    }
+
+    class Evento {
+        +id INTEGER PK
+        +registro_quincenal_id INTEGER FK
+        +tipo_evento TipoEvento
+        +descripcion STRING
+        +horas DECIMAL
+        +fecha_evento DATE
+    }
+
+    class RolUsuario {
+        <<enumeration>>
+        ADMINISTRADOR
+        SUPERVISOR
+        COLABORADOR
+    }
+
+    class EstadoRegistro {
+        <<enumeration>>
+        BORRADOR
+        ENVIADO
+    }
+
+    class TipoEvento {
+        <<enumeration>>
+        ASIGNACION
+        REUNION
+        SOPORTE
+        CAPACITACION
+        OTRO
+    }
+
+    Usuario --> RolUsuario
+    RegistroQuincenal --> EstadoRegistro
+    Evento --> TipoEvento
+
+    Colaborador "1" --> "0..1" Usuario : cuenta
+    Colaborador "1" --> "0..*" RegistroQuincenal : registros
+    Quincena "1" --> "0..*" RegistroQuincenal : registros
+    RegistroQuincenal "1" --> "0..*" Evento : eventos

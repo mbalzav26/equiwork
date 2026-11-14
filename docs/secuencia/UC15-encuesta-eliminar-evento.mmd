@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor Colaborador
+    participant Navegador
+    participant EncuestaController
+    participant EncuestaService
+    participant EventoRepository
+    participant EventoService
+    participant DB as Base de datos
+
+    Colaborador->>Navegador: Eliminar evento propio
+    Navegador->>EncuestaController: DELETE evento encuesta
+    EncuestaController->>EncuestaService: eliminarMiEvento(usuario, eventoId)
+    EncuestaService->>EncuestaService: assertColaborador(usuario)
+    EncuestaService->>EventoRepository: findById(eventoId)
+    EventoRepository->>DB: SELECT con registro y colaborador
+    DB-->>EventoRepository: evento
+
+    alt Evento de otro colaborador
+        EncuestaService-->>EncuestaController: AppError 403
+        EncuestaController-->>Navegador: 403 JSON
+    else Evento propio
+        EncuestaService->>EventoService: eliminarEvento(eventoId)
+        EventoService->>DB: DELETE evento
+        EncuestaService-->>EncuestaController: ok
+        EncuestaController-->>Navegador: 200 JSON ok
+        Navegador-->>Colaborador: Lista actualizada
+    end

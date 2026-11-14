@@ -1,0 +1,39 @@
+@startuml diagrama-despliegue-equiwork
+title DIAGRAMA DE DESPLIEGUE
+skinparam shadowing false
+skinparam defaultFontName Segoe UI
+skinparam packageStyle rectangle
+
+package Clientes {
+  node "Consola\n(PC administrador)" as Console
+  node "Estacion de trabajo\n(navegador web)" as Kiosk
+}
+
+package Servidor {
+  node "Servidor web\n(HTTP / estaticos)" as CacheServer
+  node "Servidor de aplicacion\n(Node.js + Express)" as AppServer
+  node "Servidor de datos\n(MySQL / SQLite)" as DataServer
+
+  artifact "express-http" as httpArt <<artifact>>
+  artifact "assets-web" as staticArt <<artifact>>
+  artifact "equiwork-app" as appArt <<artifact>>
+  artifact "vistas-ejs" as viewsArt <<artifact>>
+  artifact "sequelize-orm" as ormArt <<artifact>>
+  artifact "motor-bd" as dbArt <<artifact>>
+  artifact "base-equiwork" as dataArt <<artifact>>
+
+  httpArt ..> CacheServer : <<deploy>>
+  staticArt ..> CacheServer : <<deploy>>
+  appArt ..> AppServer : <<deploy>>
+  viewsArt ..> AppServer : <<deploy>>
+  ormArt ..> AppServer : <<deploy>>
+  dbArt ..> DataServer : <<deploy>>
+  dataArt ..> DataServer : <<deploy>>
+}
+
+Console --> CacheServer
+Kiosk --> CacheServer
+CacheServer --> AppServer
+AppServer --> DataServer
+
+@enduml

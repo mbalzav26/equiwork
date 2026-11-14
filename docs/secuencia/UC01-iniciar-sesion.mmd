@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant Navegador
+    participant AuthController
+    participant AuthService
+    participant UsuarioRepository
+    participant DB as Base de datos
+
+    Usuario->>Navegador: Ingresar email y contraseña
+    Navegador->>AuthController: POST /login
+    AuthController->>AuthService: login(email, password)
+    AuthService->>UsuarioRepository: findByEmail(email)
+    UsuarioRepository->>DB: SELECT usuarios
+    DB-->>UsuarioRepository: fila usuario
+    UsuarioRepository-->>AuthService: usuario
+
+    alt Credenciales invalidas
+        AuthService-->>AuthController: AppError 401
+        AuthController-->>Navegador: Vista login con error
+        Navegador-->>Usuario: Mensaje de error
+    else Credenciales validas
+        AuthService->>AuthService: verificar bcrypt y rol
+        AuthService->>AuthService: generar JWT
+        AuthService-->>AuthController: token y sesion
+        AuthController->>Navegador: Set-Cookie y redirect
+        Navegador-->>Usuario: Redirigir segun rol
+    end

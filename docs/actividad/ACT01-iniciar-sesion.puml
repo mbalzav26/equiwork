@@ -1,0 +1,48 @@
+@startuml ACT01-iniciar-sesion
+title ACT01 — Iniciar sesión
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Usuario|
+start
+:Ingresar correo y contraseña;
+:Enviar formulario POST /login;
+
+|Sistema|
+:Validar formato de entrada;
+if (¿Datos válidos?) then (no)
+  :Mostrar error en pantalla login;
+  stop
+else (sí)
+endif
+:Buscar usuario activo por email;
+if (¿Usuario existe?) then (no)
+  :Rechazar credenciales;
+  stop
+else (sí)
+endif
+:Comparar contraseña con hash;
+if (¿Contraseña correcta?) then (no)
+  :Rechazar credenciales;
+  stop
+else (sí)
+endif
+if (¿Rol COLABORADOR sin colaborador_id?) then (sí)
+  :Denegar acceso 403;
+  stop
+else (no)
+endif
+:Generar token JWT;
+:Guardar cookie httpOnly y sesión;
+if (¿Rol?) then (COLABORADOR)
+  :Redirigir a /encuesta;
+elseif (ADMIN o SUPERVISOR) then
+  :Redirigir a /dashboard;
+else (otro)
+  :Redirigir según política;
+endif
+
+|Usuario|
+:Acceder al módulo correspondiente;
+stop
+@enduml

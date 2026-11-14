@@ -1,0 +1,34 @@
+@startuml ACT02-registrar-evento-quincenal
+title ACT02 — Registrar evento quincenal (supervisor)
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Supervisor|
+start
+:Seleccionar quincena y colaborador;
+:Completar fecha, tipo, horas y descripción;
+:Enviar POST /api/eventos;
+
+|Sistema|
+:Autenticar JWT y permisos staff;
+:Validar cuerpo del evento;
+:Obtener colaborador por id;
+if (¿Colaborador activo?) then (no)
+  :Error COLABORADOR_INACTIVO;
+  stop
+else (sí)
+endif
+:Obtener quincena por id;
+if (¿Fecha dentro del rango quincena?) then (no)
+  :Error FECHA_INVALIDA;
+  stop
+else (sí)
+endif
+:Obtener o crear RegistroQuincenal\n(colaborador + quincena);
+:Insertar Evento en el registro;
+:Responder 201 con evento creado;
+
+|Supervisor|
+:Actualizar historial en pantalla;
+stop
+@enduml

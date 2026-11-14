@@ -1,0 +1,20 @@
+sequenceDiagram
+    autonumber
+    actor Admin
+    participant Navegador
+    participant ColaboradorController
+    participant ColaboradorService
+    participant ColaboradorRepository
+    participant DB as Base de datos
+
+    Admin->>Navegador: Desactivar colaborador
+    Navegador->>ColaboradorController: DELETE colaborador por id
+    Note over Navegador,ColaboradorController: Solo rol Administrador
+    ColaboradorController->>ColaboradorService: desactivar(id)
+    ColaboradorService->>ColaboradorService: obtenerPorId(id)
+    ColaboradorService->>ColaboradorRepository: softDelete(id)
+    ColaboradorRepository->>DB: UPDATE activo false
+    DB-->>ColaboradorRepository: ok
+    ColaboradorService-->>ColaboradorController: void
+    ColaboradorController-->>Navegador: 200 JSON ok
+    Navegador-->>Admin: Colaborador marcado inactivo

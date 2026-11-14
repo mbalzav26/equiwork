@@ -1,0 +1,55 @@
+@startuml ACT03-encuesta-colaborador
+title ACT03 — Encuesta quincenal (colaborador)
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Colaborador|
+start
+:Acceder a /encuesta;
+
+|Sistema|
+if (¿Rol COLABORADOR?) then (no)
+  :Redirigir fuera de encuesta;
+  stop
+else (sí)
+endif
+
+|Colaborador|
+partition "Registrar actividad" {
+  :Elegir quincena y datos del evento;
+  :POST /api/encuesta/eventos;
+}
+
+|Sistema|
+:Verificar colaborador_id en sesión;
+note right: Reutiliza lógica de\nregistro de evento (UC09)
+:Validar y persistir evento;
+:Responder 201;
+
+|Colaborador|
+partition "Consultar resumen" {
+  :GET resumen o historial de quincena;
+}
+
+|Sistema|
+:Listar eventos del registro quincenal;
+:Calcular total horas y cantidad;
+
+|Colaborador|
+partition "Eliminar actividad propia" {
+  :Solicitar eliminar evento;
+}
+
+|Sistema|
+:Cargar evento con registro;
+if (¿Pertenece al colaborador autenticado?) then (no)
+  :Error 403 FORBIDDEN;
+  stop
+else (sí)
+  :Eliminar evento;
+endif
+
+|Colaborador|
+:Ver lista actualizada;
+stop
+@enduml

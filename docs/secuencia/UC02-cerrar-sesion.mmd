@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    actor Usuario
+    participant Navegador
+    participant AuthController
+
+    Usuario->>Navegador: Cerrar sesion
+    Navegador->>AuthController: POST /logout
+    AuthController->>Navegador: clearCookie equiwork_token
+    AuthController->>AuthController: destroy session
+    AuthController-->>Navegador: redirect login
+    Navegador-->>Usuario: Pantalla de login

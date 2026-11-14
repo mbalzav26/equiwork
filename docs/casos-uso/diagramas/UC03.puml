@@ -1,0 +1,23 @@
+﻿@startuml UC03
+left to right direction
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+actor Administrador as ADM
+actor Supervisor as SUP
+rectangle "Sistema EquiWork" {
+  usecase "UC03\nSupervisar carga\nlaboral quincenal" as UC
+  usecase "Consultar balance\nen dashboard" as I1
+  usecase "Registrar evento\nquincenal" as I2
+  usecase "Consultar historial" as I3
+  usecase "Eliminar evento" as I4
+}
+ADM --> UC
+SUP --> UC
+UC ..> I1 : <<include>>
+UC ..> I2 : <<include>>
+I2 ..> I3 : <<include>>
+UC ..> I4 : <<include>>
+@enduml

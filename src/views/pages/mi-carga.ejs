@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="mi-carga">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner">
+        <%- include('../partials/page-loading', { id: 'mcLoading', scope: 'page' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="mb-6">
+        <p class="ew-section-kicker">Tu balance</p>
+        <h1 class="ew-page-title">Mi carga</h1>
+        <p class="ew-page-subtitle">
+          Resumen de tu carga laboral, historial quincenal y comparación con el promedio de tu área (sin datos de otros
+          colaboradores).
+        </p>
+      </div>
+
+      <div id="mcNotificaciones" class="mb-6 hidden space-y-2"></div>
+
+      <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div class="min-w-0 max-w-xs">
+          <label class="ew-label" for="mcQuincena">Quincena</label>
+          <select id="mcQuincena" class="ew-select"></select>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a href="/encuesta" class="ew-btn-primary">Ir a encuesta</a>
+          <button type="button" class="ew-btn-secondary" id="mcExportJson">Exportar JSON</button>
+        </div>
+      </div>
+
+      <div id="mcContenido" class="space-y-6">
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div class="ew-kpi">
+            <p class="ew-kpi-label">Estado de carga</p>
+            <p class="mt-2" id="mcEstadoCarga">—</p>
+          </div>
+          <div class="ew-kpi">
+            <p class="ew-kpi-label">Horas reportadas</p>
+            <p class="ew-kpi-value" id="mcTotalHoras">0</p>
+          </div>
+          <div class="ew-kpi">
+            <p class="ew-kpi-label">Eventos</p>
+            <p class="ew-kpi-value" id="mcTotalEventos">0</p>
+          </div>
+          <div class="ew-kpi">
+            <p class="ew-kpi-label">Meta quincenal</p>
+            <p class="ew-kpi-value text-xl" id="mcMeta">80 h</p>
+          </div>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-2">
+          <section class="ew-card">
+            <div class="ew-card-header">
+              <h2 class="text-base font-semibold text-slate-900">Comparación con tu área</h2>
+            </div>
+            <div class="ew-card-body space-y-2 text-sm text-slate-700">
+              <p>
+                Área: <strong id="mcArea">—</strong> · Promedio de horas en la quincena:
+                <strong id="mcPromedioArea">—</strong>
+              </p>
+              <p id="mcDiffArea" class="text-slate-600"></p>
+              <p class="ew-help">
+                El promedio agrupa solo colaboradores activos de tu misma área en esta quincena.
+              </p>
+            </div>
+          </section>
+          <section class="ew-card">
+            <div class="ew-card-header">
+              <h2 class="text-base font-semibold text-slate-900">Estado de la encuesta</h2>
+            </div>
+            <div class="ew-card-body">
+              <p class="text-sm font-medium text-slate-800" id="mcEstadoEncuesta">—</p>
+              <p class="mt-1 text-xs text-slate-500" id="mcRangoQuincena"></p>
+            </div>
+          </section>
+        </div>
+
+        <section class="ew-card">
+          <div class="ew-card-header">
+            <h2 class="text-base font-semibold text-slate-900">Calendario de actividades</h2>
+            <p class="mt-1 text-xs text-slate-500">Tus registros en la quincena seleccionada</p>
+          </div>
+          <div class="ew-card-body">
+            <ul id="mcCalendario" class="space-y-2"></ul>
+          </div>
+        </section>
+
+        <section class="ew-card">
+          <div class="ew-card-header">
+            <h2 class="text-base font-semibold text-slate-900">Historial quincenal</h2>
+          </div>
+          <div class="ew-table-wrap">
+            <table class="ew-table" id="mcTablaHistorial">
+              <thead>
+                <tr>
+                  <th>Quincena</th>
+                  <th>Estado encuesta</th>
+                  <th>Carga</th>
+                  <th>Horas</th>
+                  <th>Eventos</th>
+                  <th class="text-right">Ver</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/miCarga.js"></script>
+  </body>
+</html>

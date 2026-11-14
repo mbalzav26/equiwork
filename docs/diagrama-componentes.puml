@@ -1,0 +1,66 @@
+@startuml diagrama-componentes-equiwork
+title Diagrama de componentes — EquiWork (vista física / despliegue lógico)
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam defaultFontName Segoe UI
+skinparam packageStyle rectangle
+
+skinparam component {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+
+actor "Usuario" as user
+
+node "Estación cliente" as clientNode {
+  component "Navegador web" as browser {
+    portin " "
+    portout " HTTP/HTTPS"
+  }
+  component "Assets estáticos\n(CSS, JS, Chart.js)" as static <<public>> 
+}
+
+node "Servidor de aplicación\nNode.js + Express" as serverNode {
+  together {
+    component "Rutas web\n(webRoutes)" as webRoutes
+    component "Rutas API\n(apiRoutes)" as apiRoutes
+  }
+  component "Middlewares\n(auth, validación, errores)" as middlewares
+  component "Controladores\n(MVC)" as controllers
+  component "Servicios\n(lógica de negocio)" as services
+  component "Repositorios\n(acceso a datos)" as repositories
+  component "Modelos ORM\n(Sequelize)" as models
+  component "Vistas EJS\n(presentación servidor)" as views
+}
+
+database "Motor de datos\nSQLite / MySQL" as db {
+  component "Base de datos\nEquiWork" as database
+}
+
+interface "IAutenticación\n(JWT + cookie)" as IAuth
+interface "IAPI REST\n(/api/*)" as IRest
+interface "IPersistencia\n(Sequelize)" as IPersist
+
+user --> browser : interactúa
+browser --> webRoutes : GET/POST páginas
+browser --> apiRoutes : fetch JSON
+browser ..> static : carga recursos
+
+webRoutes --> middlewares
+apiRoutes --> middlewares
+middlewares ..> IAuth
+middlewares --> controllers
+
+controllers --> services
+controllers --> views : render()
+views ..> browser : HTML
+
+services --> repositories
+repositories --> models
+models ..> IPersist
+models --> database : SQL
+
+apiRoutes ..> IRest
+controllers ..> IRest
+
+@enduml

@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant ColaboradorController
+    participant ColaboradorService
+    participant ColaboradorRepository
+    participant ColaboradorCuentaService
+    participant DB as Base de datos
+
+    Staff->>Navegador: Completar formulario nuevo colaborador
+    Navegador->>ColaboradorController: POST /api/colaboradores
+    ColaboradorController->>ColaboradorService: crear(payload)
+    ColaboradorService->>ColaboradorRepository: findByEmail(email)
+    ColaboradorRepository->>DB: SELECT
+    DB-->>ColaboradorRepository: null
+    ColaboradorService->>ColaboradorRepository: create(datos)
+    ColaboradorRepository->>DB: INSERT colaboradores
+    DB-->>ColaboradorRepository: colaborador
+
+    opt Cuenta encuesta opcional
+        ColaboradorService->>ColaboradorCuentaService: crearCuentaEncuesta(id)
+        ColaboradorCuentaService->>DB: INSERT/UPDATE usuarios
+    end
+
+    ColaboradorService-->>ColaboradorController: colaborador serializado
+    ColaboradorController-->>Navegador: 201 Created
+    Navegador-->>Staff: Confirmación en UI

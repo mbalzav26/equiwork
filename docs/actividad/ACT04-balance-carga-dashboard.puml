@@ -1,0 +1,34 @@
+@startuml ACT04-balance-carga-dashboard
+title ACT04 — Consultar balance de carga (dashboard)
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Supervisor|
+start
+:Abrir dashboard;
+:Seleccionar quincena;
+:Solicitar GET balance;
+
+|Sistema|
+:Validar quincena existente;
+:Consultar colaboradores activos;
+:Agregar horas y eventos por colaborador\nen la quincena (SQL agregado);
+
+while (¿Hay más colaboradores?) is (sí)
+  :Leer total_horas del colaborador;
+  if (total > meta × 1.15) then (sí)
+    :estado_carga = sobrecarga;
+  elseif (total < meta × 0.6) then (sí)
+    :estado_carga = subasignado;
+  else (no)
+    :estado_carga = equilibrado;
+  endif
+endwhile (no)
+
+:Calcular promedio de horas del equipo;
+:Armar JSON con meta, quincena y filas;
+
+|Supervisor|
+:Visualizar gráficos y semáforos de carga;
+stop
+@enduml

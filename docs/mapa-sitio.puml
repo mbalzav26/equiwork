@@ -1,0 +1,51 @@
+@startuml mapa-sitio-equiwork
+title Mapa del sitio web — EquiWork
+skinparam shadowing false
+skinparam defaultFontName Segoe UI
+skinparam rectangle {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+
+rectangle "Zona pública" #ffffff {
+  card "**/** \n(Raíz)" as root
+  card "**/login** \nIniciar sesión" as login
+  root -down-> login : sin sesión
+  login -down-> root : sesión válida\n(redirección por rol)
+}
+
+rectangle "Zona autenticada — Staff\n(Administrador / Supervisor)" #ffffff {
+  card "**/dashboard** \nDashboard analítico" as dash
+  card "**/colaboradores** \nGestión de colaboradores" as colab
+  card "**/eventos** \nRegistro quincenal" as ev
+  card "**/reportes** \nReportes quincenales" as rep
+  dash -[hidden]right- colab
+  colab -[hidden]right- ev
+  ev -[hidden]right- rep
+}
+
+rectangle "Zona autenticada — Colaborador" #ffffff {
+  card "**/encuesta** \nAutoreporte quincenal" as enc
+}
+
+login -down-> dash : Admin / Supervisor
+login -down-> enc : Colaborador
+
+note bottom of login
+  **Acción global:** POST /logout (Cerrar sesión)
+  desde barra superior del contenido
+end note
+
+note right of dash
+  **Navegación principal (sidebar):**
+  Dashboard · Colaboradores · Eventos · Reportes
+  + detalle de usuario (nombre, rol)
+end note
+
+note right of enc
+  **Navegación principal (sidebar):**
+  Encuesta
+  + detalle de usuario (nombre, rol)
+end note
+
+@enduml

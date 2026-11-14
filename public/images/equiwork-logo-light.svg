@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="EquiWork">
+  <defs>
+    <linearGradient id="ewLogoLightIconBg" x1="8" y1="6" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0474C4" />
+      <stop offset="1" stop-color="#06457F" />
+    </linearGradient>
+    <linearGradient id="ewLogoLightIconGlow" x1="24" y1="28" x2="24" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A8C4EC" stop-opacity="0.95" />
+      <stop offset="1" stop-color="#5379AE" stop-opacity="0.85" />
+    </linearGradient>
+  </defs>
+  <g>
+    <rect width="48" height="48" rx="11" fill="url(#ewLogoLightIconBg)" />
+    <circle cx="24" cy="13.5" r="2.25" fill="#A8C4EC" />
+    <path d="M24 15.5V21" stroke="#fff" stroke-width="2.4" stroke-linecap="round" />
+    <path d="M10.5 21h27" stroke="#fff" stroke-width="2.6" stroke-linecap="round" />
+    <path
+      d="M10.5 21v1.8c0 1.85 1.65 3.2 3.5 3.2s3.5-1.35 3.5-3.2V21"
+      stroke="#fff"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M30.5 21v1.8c0 1.85 1.65 3.2 3.5 3.2s3.5-1.35 3.5-3.2V21"
+      stroke="#fff"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <rect x="13" y="30.5" width="5.5" height="10" rx="1.4" fill="url(#ewLogoLightIconGlow)" />
+    <rect x="21.25" y="30.5" width="5.5" height="10" rx="1.4" fill="#fff" fill-opacity="0.95" />
+    <rect x="29.5" y="30.5" width="5.5" height="10" rx="1.4" fill="url(#ewLogoLightIconGlow)" />
+    <path d="M12 43h24" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-opacity="0.35" />
+  </g>
+  <text
+    x="58"
+    y="33"
+    fill="#FFFFFF"
+    font-family="Segoe UI, ui-sans-serif, system-ui, sans-serif"
+    font-size="22"
+    font-weight="700"
+    letter-spacing="-0.02em"
+  >
+    EquiWork
+  </text>
+</svg>

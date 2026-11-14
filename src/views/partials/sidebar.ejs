@@ -1,0 +1,110 @@
+<%
+  const roles = usuario.roles || [usuario.rol];
+  const tieneColaborador = roles.includes('COLABORADOR');
+  const tieneStaff = roles.includes('ADMINISTRADOR') || roles.includes('SUPERVISOR');
+  const esAdmin = roles.includes('ADMINISTRADOR');
+  const homeHref = tieneStaff && !tieneColaborador ? '/dashboard' : tieneStaff ? '/dashboard' : '/encuesta';
+%>
+<aside id="ewSidebar" class="ew-sidebar" aria-label="Navegación principal">
+  <div class="ew-sidebar-header">
+    <a href="<%= homeHref %>" class="ew-sidebar-brand">
+      <img
+        src="/images/equiwork-icon.svg"
+        alt=""
+        class="ew-sidebar-logo"
+        width="40"
+        height="40"
+      />
+      <span class="ew-sidebar-brand-text">EquiWork</span>
+    </a>
+    <button type="button" id="sidebarCollapseBtn" class="ew-sidebar-collapse" aria-label="Contraer menú">
+      <span data-icon="chevron-left"></span>
+    </button>
+  </div>
+
+  <div class="ew-sidebar-user-section">
+    <a href="/perfil" class="ew-sidebar-user ew-sidebar-user-link" title="Mi perfil">
+      <% if (usuario.foto_url) { %>
+      <img
+        src="<%= usuario.foto_url %>"
+        alt="Foto de <%= usuario.nombre %>"
+        class="ew-sidebar-avatar ew-foto-ampliar"
+        width="36"
+        height="36"
+        title="Ver foto en grande"
+      />
+      <% } else { %>
+      <span class="ew-sidebar-user-icon" data-icon="user"></span>
+      <% } %>
+      <div class="ew-sidebar-user-text min-w-0">
+        <p class="truncate text-sm font-semibold text-white"><%= usuario.nombre %></p>
+        <p class="truncate text-xs text-brand-100/90"><%= roles.join(' · ') %></p>
+      </div>
+    </a>
+  </div>
+
+  <nav class="ew-sidebar-nav" id="sidebarNav">
+    <% if (tieneColaborador) { %>
+    <p class="ew-sidebar-nav-kicker">Colaborador</p>
+    <a href="/mi-carga" data-nav="mi-carga" data-icon="chart-bar" class="ew-sidebar-link" title="Mi carga">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Mi carga</span>
+    </a>
+    <a
+      href="/encuesta"
+      data-nav="encuesta"
+      data-icon="clipboard-document-check"
+      class="ew-sidebar-link"
+      title="Encuesta"
+      data-colab-notif="encuesta"
+    >
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Encuesta</span>
+    </a>
+    <a
+      href="/catalogo-actividades"
+      data-nav="catalogo"
+      data-icon="tag"
+      class="ew-sidebar-link"
+      title="Catálogo de actividades"
+    >
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Catálogo</span>
+    </a>
+    <a href="/quejas-sugerencias" data-nav="quejas" data-icon="chat-bubble-left-right" class="ew-sidebar-link" title="Quejas y sugerencias">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Quejas y sugerencias</span>
+    </a>
+    <% } %>
+    <% if (tieneStaff) { %>
+    <% if (tieneColaborador) { %><p class="ew-sidebar-nav-kicker mt-2">Gestión</p><% } %>
+    <a href="/dashboard" data-nav="dashboard" data-icon="squares-2x2" class="ew-sidebar-link" title="Dashboard">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Dashboard</span>
+    </a>
+    <a href="/colaboradores" data-nav="colaboradores" data-icon="users" class="ew-sidebar-link" title="Colaboradores">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Colaboradores</span>
+    </a>
+    <a href="/eventos" data-nav="eventos" data-icon="calendar-days" class="ew-sidebar-link" title="Eventos">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Eventos</span>
+    </a>
+    <% if (esAdmin) { %>
+    <a href="/actividades" data-nav="actividades" data-icon="sparkles" class="ew-sidebar-link" title="Actividades">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Actividades</span>
+    </a>
+    <a href="/quejas-admin" data-nav="quejas-admin" data-icon="inbox" class="ew-sidebar-link" title="Quejas recibidas">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Quejas y sugerencias</span>
+    </a>
+    <% } %>
+    <a href="/reportes" data-nav="reportes" data-icon="document-chart-bar" class="ew-sidebar-link" title="Reportes">
+      <span class="ew-sidebar-icon"></span>
+      <span class="ew-sidebar-label">Reportes</span>
+    </a>
+    <% } %>
+  </nav>
+</aside>
+<div id="sidebarBackdrop" class="ew-sidebar-backdrop" hidden></div>

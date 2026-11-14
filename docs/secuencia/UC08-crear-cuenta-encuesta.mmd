@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant ColaboradorController
+    participant ColaboradorCuentaService
+    participant ColaboradorService
+    participant UsuarioRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Crear acceso encuesta
+    Navegador->>ColaboradorController: POST cuenta-encuesta
+    ColaboradorController->>ColaboradorCuentaService: crearCuentaEncuesta(id, password)
+    ColaboradorCuentaService->>ColaboradorService: obtenerPorId(id)
+    ColaboradorService->>DB: SELECT colaborador
+    ColaboradorCuentaService->>ColaboradorCuentaService: bcrypt.hash(password)
+    ColaboradorCuentaService->>UsuarioRepository: findByEmailIncludingInactive(email)
+    UsuarioRepository->>DB: SELECT usuarios
+
+    alt Usuario colaborador ya existe
+        ColaboradorCuentaService->>DB: UPDATE usuario
+    else Usuario nuevo
+        ColaboradorCuentaService->>UsuarioRepository: create(datos)
+        UsuarioRepository->>DB: INSERT usuarios
+    end
+
+    ColaboradorCuentaService-->>ColaboradorController: email, rol, password temporal
+    ColaboradorController-->>Navegador: 201 JSON
+    Navegador-->>Staff: Credenciales de prueba

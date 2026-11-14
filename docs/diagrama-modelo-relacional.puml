@@ -1,0 +1,90 @@
+@startuml diagrama-modelo-relacional-equiwork
+title Modelo relacional — EquiWork
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 8
+skinparam classBackgroundColor #eef5fc
+skinparam classBorderColor #06457f
+
+entity "colaboradores" as colaboradores {
+  * **id** : INTEGER UNSIGNED <<PK>>
+  --
+  nombres : VARCHAR(80) <<NOT NULL>>
+  apellidos : VARCHAR(80) <<NOT NULL>>
+  email : VARCHAR(120) <<NOT NULL, UK>>
+  cargo : VARCHAR(80) <<NOT NULL>>
+  area : VARCHAR(80) <<NOT NULL>>
+  activo : BOOLEAN <<NOT NULL, DEFAULT true>>
+  created_at : DATETIME
+  updated_at : DATETIME
+}
+
+entity "quincenas" as quincenas {
+  * **id** : INTEGER UNSIGNED <<PK>>
+  --
+  anio : SMALLINT UNSIGNED <<NOT NULL>>
+  mes : TINYINT UNSIGNED <<NOT NULL>>
+  numero_quincena : TINYINT <<NOT NULL, 1|2>>
+  fecha_inicio : DATE <<NOT NULL>>
+  fecha_fin : DATE <<NOT NULL>>
+  created_at : DATETIME
+  updated_at : DATETIME
+  ..
+  **UK** (anio, mes, numero_quincena)
+}
+
+entity "registros_quincenales" as registros {
+  * **id** : INTEGER UNSIGNED <<PK>>
+  --
+  * colaborador_id : INTEGER UNSIGNED <<FK>>
+  * quincena_id : INTEGER UNSIGNED <<FK>>
+  estado : ENUM(BORRADOR, ENVIADO) <<NOT NULL>>
+  observaciones : VARCHAR(500)
+  created_at : DATETIME
+  updated_at : DATETIME
+  ..
+  **UK** (colaborador_id, quincena_id)
+}
+
+entity "eventos" as eventos {
+  * **id** : INTEGER UNSIGNED <<PK>>
+  --
+  * registro_quincenal_id : INTEGER UNSIGNED <<FK>>
+  tipo_evento : ENUM <<NOT NULL>>
+  descripcion : VARCHAR(255) <<NOT NULL>>
+  horas : DECIMAL(5,2) <<NOT NULL>>
+  fecha_evento : DATE <<NOT NULL>>
+  created_at : DATETIME
+  updated_at : DATETIME
+}
+
+entity "usuarios" as usuarios {
+  * **id** : INTEGER UNSIGNED <<PK>>
+  --
+  email : VARCHAR(120) <<NOT NULL, UK>>
+  password_hash : VARCHAR(255) <<NOT NULL>>
+  nombre : VARCHAR(100) <<NOT NULL>>
+  rol : ENUM(ADMINISTRADOR, SUPERVISOR, COLABORADOR) <<NOT NULL>>
+  colaborador_id : INTEGER UNSIGNED <<FK, NULL>>
+  activo : BOOLEAN <<NOT NULL, DEFAULT true>>
+  created_at : DATETIME
+  updated_at : DATETIME
+}
+
+colaboradores ||--o{ registros : "realiza"
+quincenas ||--o{ registros : "agrupa"
+registros ||--o{ eventos : "contiene"
+colaboradores |o--o| usuarios : "cuenta encuesta\n(0..1)"
+
+note bottom of registros
+  Tabla asociativa colaborador–quincena.
+  Un colaborador tiene como máximo
+  un registro por quincena.
+end note
+
+note bottom of eventos
+  tipo_evento: ASIGNACION, REUNION,
+  SOPORTE, CAPACITACION, OTRO
+end note
+
+@enduml

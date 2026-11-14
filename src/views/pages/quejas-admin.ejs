@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="quejas-admin">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner">
+        <%- include('../partials/page-loading', { id: 'quejasLoading', scope: 'page' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="ew-section-kicker">Administración</p>
+          <h1 class="ew-page-title">Quejas y sugerencias</h1>
+          <p class="ew-page-subtitle">Mensajes enviados por colaboradores (incluye anónimos).</p>
+        </div>
+        <button type="button" class="ew-btn-secondary" id="btnRefrescarQuejas">Actualizar</button>
+      </div>
+
+      <ul id="listaQuejasAdmin" class="space-y-4"></ul>
+        </div>
+      </div>
+    </main>
+
+    <div
+      id="modalQuejaDetalle"
+      class="hidden fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center"
+      data-modal
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalQuejaTitulo"
+    >
+      <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-[2px]" data-modal-backdrop></div>
+      <div class="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+          <h2 class="text-lg font-semibold text-slate-900" id="modalQuejaTitulo">Detalle</h2>
+          <button type="button" class="ew-btn-secondary min-h-10 px-3 py-2" data-modal-close>Cerrar</button>
+        </div>
+        <div class="space-y-4 px-5 py-5 text-sm" id="modalQuejaCuerpo"></div>
+      </div>
+    </div>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/quejasAdmin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<%
+  const loadingId = typeof id !== 'undefined' ? id : 'pageLoading';
+  const loadingScope = typeof scope !== 'undefined' ? scope : 'page';
+  const loadingLabel = typeof label !== 'undefined' ? label : 'Cargando…';
+%>
+<div
+  id="<%= loadingId %>"
+  class="<%= loadingScope === 'section' ? 'ew-section-loading' : 'ew-page-loading' %> hidden"
+  data-loading-scope="<%= loadingScope %>"
+  role="status"
+  aria-live="polite"
+>
+  <div class="ew-spinner" aria-hidden="true"></div>
+  <p class="ew-page-loading-label"><%= loadingLabel %></p>
+</div>

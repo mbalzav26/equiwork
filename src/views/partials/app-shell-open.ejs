@@ -1,0 +1,33 @@
+<div id="ewApp" class="ew-app">
+  <%- include('./sidebar', { usuario }) %>
+  <div class="ew-main">
+    <header class="ew-topbar">
+      <button type="button" id="sidebarMobileOpen" class="ew-topbar-btn" aria-label="Abrir menú">
+        <span data-icon="bars-3"></span>
+      </button>
+      <p class="ew-topbar-title">EquiWork</p>
+      <div class="ew-topbar-actions ml-auto flex items-center gap-2 lg:hidden">
+        <%- include('./theme-switch') %>
+        <form action="/logout" method="post" class="m-0">
+        <button type="submit" class="ew-btn-logout" title="Cerrar sesión">
+          <span class="ew-btn-logout-icon" data-icon="arrow-right-start-on-rectangle"></span>
+          <span class="hidden sm:inline">Salir</span>
+        </button>
+        </form>
+      </div>
+    </header>
+
+    <header class="ew-main-header">
+      <div class="ew-main-header-actions flex items-center gap-3">
+        <%- include('./theme-switch') %>
+        <form action="/logout" method="post" class="m-0">
+          <button type="submit" class="ew-btn-logout" title="Cerrar sesión">
+            <span class="ew-btn-logout-icon" data-icon="arrow-right-start-on-rectangle"></span>
+            Cerrar sesión
+          </button>
+        </form>
+      </div>
+    </header>
+
+    <%- include('./toast') %>
+    <%- include('./foto-lightbox') %>

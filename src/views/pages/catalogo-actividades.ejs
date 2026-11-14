@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="catalogo">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner">
+        <%- include('../partials/page-loading', { id: 'catLoading', scope: 'page' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="mb-8">
+        <p class="ew-section-kicker">Referencia</p>
+        <h1 class="ew-page-title">Catálogo de actividades</h1>
+        <p class="ew-page-subtitle">
+          Tipos de actividad disponibles al registrar tu encuesta. Solo lectura; un administrador mantiene el catálogo.
+        </p>
+      </div>
+
+      <section class="ew-card">
+        <div class="ew-card-body">
+          <ul id="catLista" class="space-y-3"></ul>
+          <p id="catVacio" class="ew-empty hidden">No hay actividades activas en el catálogo.</p>
+        </div>
+      </section>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/catalogoActividadesColab.js"></script>
+  </body>
+</html>

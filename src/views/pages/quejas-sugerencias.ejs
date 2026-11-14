@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="quejas">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner max-w-3xl">
+        <div class="ew-page-content" data-page-content>
+      <div class="mb-8">
+        <p class="ew-section-kicker">Tu voz</p>
+        <h1 class="ew-page-title">Quejas y sugerencias</h1>
+        <p class="ew-page-subtitle">
+          Cuéntanos qué podemos mejorar. Solo los administradores leen estos mensajes. Puedes enviar de forma anónima.
+        </p>
+      </div>
+
+      <section class="ew-card max-w-2xl mb-8">
+        <div class="ew-card-header">
+          <h2 class="text-base font-semibold text-slate-900">Mis envíos</h2>
+          <p class="mt-1 text-xs text-slate-500">Historial de quejas y sugerencias que has enviado</p>
+        </div>
+        <div class="ew-card-body relative min-h-[10rem]">
+          <%- include('../partials/page-loading', { id: 'misQuejasLoading', scope: 'section' }) %>
+          <ul id="listaMisQuejas" class="space-y-3"></ul>
+        </div>
+      </section>
+
+      <section class="ew-card ew-panel-accent max-w-2xl">
+        <div class="ew-card-body">
+          <form id="formQueja" class="space-y-5">
+            <div>
+              <span class="ew-label">Tipo</span>
+              <div class="mt-2 flex flex-wrap gap-3">
+                <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm">
+                  <input type="radio" name="tipoQueja" value="QUEJA" class="h-4 w-4" checked />
+                  Queja
+                </label>
+                <label class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm">
+                  <input type="radio" name="tipoQueja" value="SUGERENCIA" class="h-4 w-4" />
+                  Sugerencia
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="ew-label" for="quejaMensaje">Mensaje</label>
+              <textarea
+                id="quejaMensaje"
+                class="ew-input min-h-[10rem] resize-y py-3"
+                maxlength="2000"
+                required
+                placeholder="Describe con detalle tu queja o sugerencia..."
+              ></textarea>
+              <p class="ew-help">Entre 10 y 2000 caracteres.</p>
+            </div>
+            <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-dashed border-brand-200 bg-brand-50/50 p-4">
+              <input type="checkbox" id="quejaAnonimo" class="mt-1 h-4 w-4 rounded border-slate-300" />
+              <span>
+                <span class="block text-sm font-medium text-slate-800">Enviar de forma anónima</span>
+                <span class="block text-xs text-slate-500">El administrador verá el mensaje pero no tu nombre ni correo.</span>
+              </span>
+            </label>
+            <button type="submit" class="ew-btn-primary ew-btn-lg w-full sm:w-auto">Enviar</button>
+          </form>
+        </div>
+      </section>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/quejasSugerencias.js"></script>
+  </body>
+</html>

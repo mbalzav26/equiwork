@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant ColaboradorController
+    participant ColaboradorService
+    participant ColaboradorRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Editar datos del colaborador
+    Navegador->>ColaboradorController: PUT colaborador por id
+    ColaboradorController->>ColaboradorService: actualizar(id, payload)
+    ColaboradorService->>ColaboradorService: obtenerPorId(id)
+    ColaboradorService->>ColaboradorRepository: findById(id)
+    ColaboradorRepository->>DB: SELECT
+    DB-->>ColaboradorRepository: colaborador
+    ColaboradorService->>ColaboradorRepository: findByEmail(email, excludeId)
+    ColaboradorRepository->>DB: SELECT unicidad email
+    DB-->>ColaboradorRepository: sin duplicado
+    ColaboradorService->>ColaboradorRepository: update(id, datos)
+    ColaboradorRepository->>DB: UPDATE colaboradores
+    DB-->>ColaboradorRepository: colaborador actualizado
+    ColaboradorService-->>ColaboradorController: resultado
+    ColaboradorController-->>Navegador: 200 JSON
+    Navegador-->>Staff: UI actualizada

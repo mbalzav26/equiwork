@@ -1,0 +1,34 @@
+@startuml ACT06-generar-reporte
+title ACT06 — Generar reporte quincenal
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Supervisor|
+start
+:Elegir quincena en reportes;
+
+if (¿Formato?) then (JSON)
+  :GET /api/reportes/{quincenaId};
+else (CSV)
+  :GET export CSV;
+endif
+
+|Sistema|
+:Verificar quincena;
+:Obtener balance (dashboard);
+:Listar registros con eventos detallados;
+:Unir balance + detalle + timestamp;
+
+if (¿Formato?) then (JSON)
+  :Responder application/json;
+  |Supervisor|
+  :Previsualizar en pantalla;
+else (CSV)
+  :Generar filas Colaborador, Email, Fecha...\nEscapar campos CSV;
+  :Responder attachment text/csv;
+  |Supervisor|
+  :Descargar archivo;
+endif
+
+stop
+@enduml

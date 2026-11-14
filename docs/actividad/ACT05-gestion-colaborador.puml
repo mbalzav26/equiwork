@@ -1,0 +1,41 @@
+@startuml ACT05-gestion-colaborador
+title ACT05 — Registrar colaborador y acceso encuesta
+skinparam activityBackgroundColor #eef5fc
+skinparam activityBorderColor #06457f
+
+|Supervisor|
+start
+:Completar datos del colaborador;
+:Enviar POST /api/colaboradores;
+
+|Sistema|
+:Validar campos obligatorios;
+:Buscar email duplicado;
+if (¿Email ya existe?) then (sí)
+  :Error 409 EMAIL_DUPLICATE;
+  stop
+else (no)
+endif
+:INSERT colaborador activo;
+
+if (¿Marcar crear cuenta encuesta?) then (sí)
+  :Hash de contraseña;
+  if (¿Usuario con mismo email existe?) then (sí)
+    if (¿Rol distinto de COLABORADOR?) then (sí)
+      :Error EMAIL_IN_USE;
+      stop
+    else (no)
+      :Actualizar usuario colaborador;
+    endif
+  else (no)
+    :INSERT usuario rol COLABORADOR\nvinculado a colaborador_id;
+  endif
+else (no)
+endif
+
+:Responder 201 con datos serializados;
+
+|Supervisor|
+:Colaborador visible en listado;
+stop
+@enduml

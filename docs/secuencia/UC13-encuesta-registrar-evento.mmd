@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor Colaborador
+    participant Navegador
+    participant EncuestaController
+    participant EncuestaService
+    participant EventoService
+    participant RegistroRepository
+    participant EventoRepository
+    participant DB as Base de datos
+
+    Colaborador->>Navegador: Registrar actividad quincenal
+    Navegador->>EncuestaController: POST /api/encuesta/eventos
+    Note over Navegador,EncuestaController: Rol Colaborador JWT
+    EncuestaController->>EncuestaService: registrarMiEvento(usuario, payload)
+    EncuestaService->>EncuestaService: assertColaborador(usuario)
+    EncuestaService->>EventoService: registrarEvento con colaborador autenticado
+    EventoService->>DB: validaciones y findOrCreate registro
+    EventoService->>EventoRepository: create(evento)
+    EventoRepository->>DB: INSERT eventos
+    EventoRepository-->>EncuestaService: evento
+    EncuestaService-->>EncuestaController: evento
+    EncuestaController-->>Navegador: 201 JSON
+    Navegador-->>Colaborador: Confirmación en encuesta

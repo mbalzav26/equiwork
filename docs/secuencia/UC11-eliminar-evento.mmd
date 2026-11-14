@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant EventoController
+    participant EventoService
+    participant EventoRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Eliminar evento del historial
+    Navegador->>EventoController: DELETE evento por id
+    EventoController->>EventoService: eliminarEvento(id)
+    EventoService->>EventoRepository: deleteById(id)
+    EventoRepository->>DB: SELECT evento
+    DB-->>EventoRepository: evento
+
+    alt Evento no existe
+        EventoRepository-->>EventoService: null
+        EventoService-->>EventoController: AppError 404
+        EventoController-->>Navegador: 404 JSON
+    else Evento encontrado
+        EventoRepository->>DB: DELETE evento
+        EventoRepository-->>EventoService: evento eliminado
+        EventoService-->>EventoController: ok
+        EventoController-->>Navegador: 200 JSON ok
+        Navegador-->>Staff: Evento removido de la lista
+    end

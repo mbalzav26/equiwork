@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body data-page="perfil">
+    <%- include('../partials/app-shell-open', { usuario }) %>
+    <main class="ew-container ew-page pb-12">
+      <div class="ew-page-inner">
+        <%- include('../partials/page-loading', { id: 'perfilLoading', scope: 'page' }) %>
+        <div class="ew-page-content" data-page-content>
+      <div class="mb-8">
+        <p class="ew-section-kicker">Cuenta</p>
+        <h1 class="ew-page-title">Mi perfil</h1>
+        <p class="ew-page-subtitle">Consulta y actualiza tu información personal.</p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2" id="perfilContenido">
+        <section class="ew-card lg:col-span-2">
+          <div class="ew-card-body flex flex-col items-center gap-4 sm:flex-row sm:items-start">
+            <div class="ew-perfil-foto-wrap">
+              <img
+                id="perfilFotoPreview"
+                src=""
+                alt=""
+                class="ew-perfil-foto ew-foto-ampliar hidden"
+                title="Ver foto en grande"
+                tabindex="-1"
+              />
+              <span id="perfilFotoPlaceholder" class="ew-perfil-foto ew-perfil-foto--placeholder" data-icon="user"></span>
+            </div>
+            <div class="min-w-0 flex-1 space-y-2 text-center sm:text-left">
+              <p class="text-sm font-medium text-slate-800">Foto de perfil</p>
+              <p class="text-xs text-slate-500">JPG, PNG o WebP. Máximo 2 MB.</p>
+              <label class="ew-btn-secondary inline-flex cursor-pointer">
+                <input type="file" id="perfilFotoInput" class="sr-only" accept="image/jpeg,image/png,image/webp,image/gif" />
+                Subir foto
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="ew-card">
+          <div class="ew-card-header">
+            <h2 class="text-base font-semibold text-slate-900">Datos personales</h2>
+          </div>
+          <div class="ew-card-body">
+            <form id="formPerfil" class="space-y-4">
+              <div>
+                <label class="ew-label" for="perfilNombre">Nombre para mostrar</label>
+                <input class="ew-input" id="perfilNombre" required maxlength="100" />
+              </div>
+              <div>
+                <label class="ew-label" for="perfilEmail">Correo</label>
+                <input type="email" class="ew-input" id="perfilEmail" required />
+              </div>
+              <div>
+                <label class="ew-label" for="perfilRol">Rol</label>
+                <input class="ew-input ew-input-readonly" id="perfilRol" readonly tabindex="-1" />
+              </div>
+              <div id="bloqueDocumentoPerfil" class="ew-perfil-subcard hidden">
+                <p class="ew-perfil-subcard-title">Documento de identidad</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="ew-label" for="perfilTipoDoc">Tipo</label>
+                    <input
+                      class="ew-input ew-input-readonly"
+                      id="perfilTipoDoc"
+                      readonly
+                      tabindex="-1"
+                      aria-readonly="true"
+                    />
+                  </div>
+                  <div>
+                    <label class="ew-label" for="perfilNumDoc">Número</label>
+                    <input
+                      class="ew-input ew-input-readonly font-mono tracking-wide"
+                      id="perfilNumDoc"
+                      readonly
+                      tabindex="-1"
+                      aria-readonly="true"
+                    />
+                  </div>
+                </div>
+                <p class="ew-perfil-subcard-help">
+                  Si necesitas corregir tu documento, contacta a un administrador del sistema.
+                </p>
+              </div>
+              <div id="bloqueColaboradorPerfil" class="ew-perfil-subcard hidden space-y-4">
+                <p class="ew-perfil-subcard-title">Ficha de colaborador</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="ew-label" for="perfilNombres">Nombres</label>
+                    <input class="ew-input" id="perfilNombres" maxlength="80" />
+                  </div>
+                  <div>
+                    <label class="ew-label" for="perfilApellidos">Apellidos</label>
+                    <input class="ew-input" id="perfilApellidos" maxlength="80" />
+                  </div>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="ew-label" for="perfilCargo">Cargo</label>
+                    <input class="ew-input" id="perfilCargo" maxlength="80" />
+                  </div>
+                  <div>
+                    <label class="ew-label" for="perfilArea">Área</label>
+                    <input class="ew-input" id="perfilArea" maxlength="80" />
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="ew-btn-primary">Guardar cambios</button>
+            </form>
+          </div>
+        </section>
+
+        <div class="space-y-6">
+          <section class="ew-card">
+            <div class="ew-card-header">
+              <h2 class="text-base font-semibold text-slate-900">Cambiar contraseña</h2>
+            </div>
+            <div class="ew-card-body">
+              <form id="formPasswordPerfil" class="space-y-4">
+                <div>
+                  <label class="ew-label" for="perfilPassActual">Contraseña actual</label>
+                  <input type="password" class="ew-input" id="perfilPassActual" required autocomplete="current-password" />
+                </div>
+                <div>
+                  <label class="ew-label" for="perfilPassNueva">Nueva contraseña</label>
+                  <input type="password" class="ew-input" id="perfilPassNueva" required minlength="8" autocomplete="new-password" />
+                </div>
+                <div>
+                  <label class="ew-label" for="perfilPassConfirm">Confirmar nueva contraseña</label>
+                  <input type="password" class="ew-input" id="perfilPassConfirm" required minlength="8" autocomplete="new-password" />
+                </div>
+                <button type="submit" class="ew-btn-secondary w-full sm:w-auto">Actualizar contraseña</button>
+              </form>
+            </div>
+          </section>
+
+        </div>
+      </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/app-shell-close') %>
+    <%- include('../partials/scripts') %>
+    <script src="/js/perfil.js"></script>
+  </body>
+</html>

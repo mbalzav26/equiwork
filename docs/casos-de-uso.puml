@@ -1,0 +1,39 @@
+@startuml diagrama-casos-de-uso-equiwork
+left to right direction
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #eef5fc
+  BorderColor #06457f
+}
+
+actor "Administrador" as ADM
+actor "Supervisor" as SUP
+actor "Colaborador" as COL
+
+rectangle "Sistema EquiWork" {
+  usecase "UC01\nGestionar acceso\nal sistema" as UC01
+  usecase "UC02\nAdministrar\ncolaboradores" as UC02
+  usecase "UC03\nSupervisar carga\nlaboral quincenal" as UC03
+  usecase "UC04\nGenerar reportes\nde carga" as UC04
+  usecase "UC05\nAutoreportar carga\n(encuesta)" as UC05
+}
+
+ADM --> UC01
+SUP --> UC01
+COL --> UC01
+
+ADM --> UC02
+SUP --> UC02
+
+ADM --> UC03
+SUP --> UC03
+
+ADM --> UC04
+SUP --> UC04
+
+COL --> UC05
+
+UC04 ..> UC03 : <<include>>\n(balance)
+
+@enduml

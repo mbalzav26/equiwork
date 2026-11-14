@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+    actor Colaborador
+    participant Navegador
+    participant EncuestaController
+    participant EncuestaService
+    participant EventoService
+    participant QuincenaService
+    participant DB as Base de datos
+
+    Colaborador->>Navegador: Consultar quincena activa
+    Navegador->>EncuestaController: GET resumen encuesta
+    EncuestaController->>EncuestaService: resumenEncuesta(usuario, quincenaId)
+    EncuestaService->>EncuestaService: assertColaborador(usuario)
+    EncuestaService->>QuincenaService: obtenerPorId(quincenaId)
+    QuincenaService->>DB: SELECT quincena
+    EncuestaService->>EventoService: historialColaborador(colaboradorId, quincenaId)
+    EventoService->>DB: registro + eventos
+    EncuestaService->>EncuestaService: calcular total_horas y total_eventos
+    EncuestaService-->>EncuestaController: resumen
+    EncuestaController-->>Navegador: 200 JSON
+    Navegador-->>Colaborador: Resumen e historial
+
+    opt Solo historial detallado
+        Colaborador->>Navegador: Ver detalle
+        Navegador->>EncuestaController: GET historial encuesta
+        EncuestaController->>EncuestaService: miHistorial(usuario, quincenaId)
+        EncuestaService->>EventoService: historialColaborador
+        EncuestaService-->>Navegador: registro con eventos
+    end

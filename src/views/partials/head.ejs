@@ -1,0 +1,23 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0474C4" />
+<title><%= title %> · EquiWork</title>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('equiwork-theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('ew-dark');
+      }
+    } catch (e) {}
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Xmind:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<link rel="icon" href="/images/equiwork-icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/images/equiwork-icon.svg" />
+<link rel="stylesheet" href="/css/equiwork.css" />

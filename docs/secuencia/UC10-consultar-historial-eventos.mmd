@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor Staff
+    participant Navegador
+    participant EventoController
+    participant EventoService
+    participant ColaboradorService
+    participant QuincenaService
+    participant RegistroRepository
+    participant DB as Base de datos
+
+    Staff->>Navegador: Seleccionar colaborador y quincena
+    Navegador->>EventoController: GET historial colaborador y quincena
+    EventoController->>EventoService: historialColaborador(colaboradorId, quincenaId)
+    EventoService->>ColaboradorService: obtenerPorId(colaboradorId)
+    EventoService->>QuincenaService: obtenerPorId(quincenaId)
+    EventoService->>RegistroRepository: findOrCreate(colaboradorId, quincenaId)
+    RegistroRepository->>DB: findOrCreate registro
+    EventoService->>RegistroRepository: findByIdWithRelations(registro.id)
+    RegistroRepository->>DB: SELECT con colaborador, quincena, eventos
+    DB-->>RegistroRepository: registro completo
+    RegistroRepository-->>EventoService: historial
+    EventoService-->>EventoController: historial
+    EventoController-->>Navegador: 200 JSON
+    Navegador-->>Staff: Lista de eventos de la quincena

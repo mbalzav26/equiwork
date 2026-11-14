@@ -1,0 +1,5 @@
+# 5.2.2 Análisis de Requerimientos de Software
+
+Para EquiWork la recolección de requerimientos se apoyó principalmente en **entrevistas semi-estructuradas** con los actores del dominio (administrador, supervisor y colaborador), orientadas a conocer cómo se registra hoy la carga laboral quincenal, qué datos se necesitan, quién consulta reportes y qué problemas genera el proceso manual o disperso. En cada sesión se indagó por flujos concretos (alta de personal, registro de eventos por quincena, balance del equipo, autoreporte del colaborador y exportación de reportes), prioridades y restricciones de acceso.
+
+Como técnicas **complementarias** se aplicaron **análisis documental** del enunciado y alcance del proyecto de grado, **observación** del proceso objetivo (registro quincenal y consolidación de horas) y **validación iterativa** mediante casos de uso (UC01–UC15), mapa del sitio y wireframes, ajustando requerimientos antes del desarrollo. La información se consolidó en requerimientos funcionales (módulos y casos de uso) y no funcionales (seguridad con roles y JWT, integridad de datos, usabilidad web), que guiaron el diseño y la implementación del producto.
