@@ -7,7 +7,7 @@
 
 ## Pasos
 
-1. Sube el código a un repositorio remoto (sin incluir `.env` ni `database/*.sqlite`).
+1. Repositorio: [github.com/mbalzav26/equiwork](https://github.com/mbalzav26/equiwork) (rama `main`, sin `.env` ni `database/*.sqlite`).
 2. En Render: **New → Blueprint** y selecciona el repo (usa el archivo `render.yaml` de la raíz).
 3. En **Environment** del servicio, define obligatoriamente:
    - `ADMIN_INITIAL_PASSWORD` — contraseña del administrador (no la subas al repo).
